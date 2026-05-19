@@ -1,0 +1,663 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>관광 취업 AI 문서 킷 · 요셉쌤 AI문서연구소</title>
+<meta name="description" content="관광 분야 취업 준비생을 위한 이력서·자소서·포트폴리오 AI 프롬프트 생성기. Claude, 감마앱, 넵킨 AI, NotebookLM 활용 가이드 포함.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700;900&family=Noto+Serif+KR:wght@500;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --teal:#0A7E6E; --teal-lt:#12A68F; --teal-bg:#E8F6F4; --teal-deep:#083D35;
+    --coral:#E8652A; --coral-bg:#FDF0E8;
+    --gold:#FEE500; --gold-deep:#381E1F;
+    --sand:#FAF7F2; --paper:#FFFFFF;
+    --ink:#1A1A1A; --ink2:#4A4A4A; --ink3:#888; --line:#E5E1D8;
+    --r:14px;
+  }
+  *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{font-family:'Noto Sans KR',sans-serif;background:var(--sand);color:var(--ink);-webkit-font-smoothing:antialiased;line-height:1.5}
+
+  .hero{background:radial-gradient(circle at 20% 20%,#12A68F 0%,#0A7E6E 35%,#0D5C50 65%,#083D35 100%);color:#fff;padding:52px 20px 56px;text-align:center;position:relative;overflow:hidden}
+  .hero::before{content:'';position:absolute;inset:0;background:url("data:image/svg+xml,%3Csvg width='80' height='80' viewBox='0 0 80 80' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M40 40m-1 0a1 1 0 1 0 2 0a1 1 0 1 0-2 0' fill='%23ffffff' fill-opacity='0.08'/%3E%3C/svg%3E");pointer-events:none}
+  .hero-inner{position:relative;z-index:1;max-width:680px;margin:0 auto}
+  .hero-badge{display:inline-block;background:rgba(255,255,255,.14);border:1px solid rgba(255,255,255,.28);border-radius:100px;padding:6px 18px;font-size:11px;letter-spacing:1.8px;font-weight:500;margin-bottom:22px;text-transform:uppercase}
+  .hero-avatar{width:78px;height:78px;border-radius:50%;background:linear-gradient(135deg,#7DEBB0,#0A7E6E);border:3px solid rgba(255,255,255,.45);display:flex;align-items:center;justify-content:center;font-size:30px;margin:0 auto 18px;box-shadow:0 8px 24px rgba(0,0,0,.25)}
+  .hero h1{font-family:'Noto Serif KR',serif;font-size:30px;font-weight:700;line-height:1.3;margin-bottom:12px;letter-spacing:-.5px}
+  .hero h1 em{color:#7DEBB0;font-style:normal}
+  .hero .sub{font-size:14px;color:rgba(255,255,255,.78);line-height:1.7;max-width:500px;margin:0 auto 28px}
+  .hero-stats{display:flex;justify-content:center;gap:36px;margin-bottom:30px;flex-wrap:wrap}
+  .hero-stat{text-align:center}
+  .hero-stat strong{display:block;font-size:24px;font-weight:900;color:#7DEBB0;line-height:1.1}
+  .hero-stat span{font-size:11px;color:rgba(255,255,255,.65);letter-spacing:.3px}
+  .hero-btns{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
+
+  .btn-kakao{background:var(--gold);color:var(--gold-deep);border:none;border-radius:10px;padding:13px 24px;font-size:13px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:transform .15s,box-shadow .15s}
+  .btn-kakao:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}
+  .btn-outline{background:transparent;color:#fff;border:1.5px solid rgba(255,255,255,.5);border-radius:10px;padding:13px 24px;font-size:13px;font-weight:500;cursor:pointer;text-decoration:none;display:inline-flex;align-items:center;gap:8px;transition:all .15s}
+  .btn-outline:hover{background:rgba(255,255,255,.12);border-color:#fff}
+
+  .container{max-width:780px;margin:0 auto;padding:0 16px}
+
+  .tools-nav{display:flex;gap:8px;justify-content:center;flex-wrap:wrap;margin:32px 0 8px;padding:0 16px}
+  .tools-nav a{font-size:12px;font-weight:600;color:var(--teal);background:var(--paper);border:1px solid var(--teal-bg);border-radius:100px;padding:7px 16px;text-decoration:none;transition:all .15s}
+  .tools-nav a:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+
+  .section{padding:44px 0 0}
+  .sec-label{display:flex;align-items:center;gap:12px;font-size:11px;font-weight:700;letter-spacing:1.8px;color:var(--teal);text-transform:uppercase;margin-bottom:8px}
+  .sec-label::after{content:'';flex:1;height:1px;background:linear-gradient(90deg,var(--teal-bg),transparent)}
+  .section h2{font-family:'Noto Serif KR',serif;font-size:24px;font-weight:700;color:var(--ink);margin-bottom:8px;letter-spacing:-.3px}
+  .section h2 em{color:var(--coral);font-style:normal}
+  .section .desc{font-size:13px;color:var(--ink2);line-height:1.8;margin-bottom:22px}
+  .section .desc strong{color:var(--teal);font-weight:700}
+
+  .card{background:var(--paper);border-radius:var(--r);border:1px solid var(--line);padding:24px;margin-bottom:16px;box-shadow:0 1px 3px rgba(0,0,0,.02)}
+
+  textarea,input[type="text"]{width:100%;padding:12px 14px;border:1.5px solid var(--line);border-radius:10px;font-family:'Noto Sans KR',sans-serif;font-size:13px;color:var(--ink);background:#FBFAF7;transition:border-color .15s,background .15s;resize:vertical;outline:none;line-height:1.6}
+  textarea:focus,input:focus{border-color:var(--teal);background:#fff}
+  textarea{min-height:100px}
+  label{display:block;font-size:12px;font-weight:600;color:var(--ink2);margin-bottom:6px}
+  label .req{color:var(--coral);margin-left:3px}
+  .field{margin-bottom:14px}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  @media(max-width:540px){.field-row{grid-template-columns:1fr}}
+
+  .tab-bar{display:flex;gap:4px;margin-bottom:18px;border-bottom:2px solid var(--line);overflow-x:auto;-webkit-overflow-scrolling:touch}
+  .tab-btn{padding:10px 14px;font-size:12px;font-weight:600;border:none;background:none;cursor:pointer;color:var(--ink3);border-bottom:2px solid transparent;margin-bottom:-2px;transition:color .15s;white-space:nowrap;font-family:'Noto Sans KR',sans-serif}
+  .tab-btn.active{color:var(--teal);border-bottom-color:var(--teal)}
+  .tab-btn:hover{color:var(--teal-lt)}
+
+  .run-btn{background:var(--teal);color:#fff;border:none;border-radius:10px;padding:14px 24px;font-size:14px;font-weight:700;cursor:pointer;width:100%;display:flex;align-items:center;justify-content:center;gap:8px;transition:background .15s,transform .15s;font-family:'Noto Sans KR',sans-serif}
+  .run-btn:hover{background:var(--teal-lt);transform:translateY(-1px)}
+  .run-btn:active{transform:translateY(0)}
+
+  .output-box{background:linear-gradient(135deg,#E8F6F4 0%,#F0FAFA 100%);border:1.5px solid #B2DDD6;border-radius:12px;padding:20px;margin-top:16px;font-size:13px;line-height:1.85;color:var(--ink);white-space:pre-wrap;display:none;position:relative;font-family:'Noto Sans KR',sans-serif}
+  .output-box.show{display:block;animation:fadeIn .3s ease}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+  .output-label{font-size:10px;font-weight:700;letter-spacing:1.2px;color:var(--teal);text-transform:uppercase;margin-bottom:12px;padding-right:130px}
+  .output-actions{position:absolute;top:14px;right:14px;display:flex;gap:6px}
+  .copy-btn,.claude-btn{background:#fff;border:1px solid var(--line);border-radius:8px;padding:6px 12px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;font-family:'Noto Sans KR',sans-serif}
+  .copy-btn{color:var(--teal)}
+  .copy-btn:hover{background:var(--teal);color:#fff;border-color:var(--teal)}
+  .claude-btn{color:var(--coral);text-decoration:none;display:inline-flex;align-items:center;gap:4px}
+  .claude-btn:hover{background:var(--coral);color:#fff;border-color:var(--coral)}
+  .output-content{margin-top:4px}
+
+  .keyword-chips{display:flex;gap:6px;flex-wrap:wrap;margin-top:6px}
+  .kchip{background:#FBFAF7;color:var(--ink2);border:1.5px solid var(--line);border-radius:100px;padding:6px 14px;font-size:12px;font-weight:500;cursor:pointer;transition:all .15s;user-select:none}
+  .kchip:hover{border-color:var(--teal);color:var(--teal)}
+  .kchip.selected{background:var(--teal);color:#fff;border-color:var(--teal);font-weight:700}
+
+  .tool-chips{display:flex;gap:6px;flex-wrap:wrap;margin-bottom:18px}
+  .chip{font-size:10px;font-weight:700;padding:4px 12px;border-radius:100px;letter-spacing:.5px}
+  .chip-claude{background:#EBE9FF;color:#5B4FD8}
+  .chip-gamma{background:#FFE9F2;color:#C8458A}
+  .chip-napkin{background:#FFF4D6;color:#8A6500}
+  .chip-nlm{background:#D9F5E4;color:#0A6638}
+
+  .notice{background:#FFF8E8;border-left:3px solid #FFB740;border-radius:8px;padding:12px 16px;font-size:12px;color:#7A5500;line-height:1.7;margin-bottom:18px}
+  .notice strong{color:#5A3F00}
+
+  .steps{display:grid;gap:10px}
+  .step-item{display:flex;gap:16px;background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;transition:border-color .15s,box-shadow .15s}
+  .step-item:hover{border-color:var(--teal-lt);box-shadow:0 4px 14px rgba(10,126,110,.08)}
+  .step-num{width:34px;height:34px;flex-shrink:0;background:linear-gradient(135deg,var(--teal),var(--teal-deep));color:#fff;border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:14px;font-weight:900}
+  .step-content{flex:1;min-width:0}
+  .step-content h4{font-size:14px;font-weight:700;margin-bottom:5px;color:var(--ink)}
+  .step-content p{font-size:12px;color:var(--ink2);line-height:1.7;margin-bottom:6px}
+  .step-prompt{background:var(--sand);border-left:3px solid var(--teal);padding:10px 12px;border-radius:6px;font-size:11px;color:var(--ink2);margin-top:8px;line-height:1.6}
+  .step-tool{display:inline-block;font-size:10px;font-weight:700;background:var(--coral-bg);color:var(--coral);border-radius:6px;padding:3px 9px;margin-top:4px}
+
+  .prompt-grid{display:grid;gap:12px}
+  .prompt-item{background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:18px;transition:box-shadow .15s,border-color .15s}
+  .prompt-item:hover{box-shadow:0 4px 16px rgba(0,0,0,.06);border-color:var(--teal-lt)}
+  .prompt-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:8px;flex-wrap:wrap;gap:6px}
+  .prompt-num{font-size:11px;font-weight:700;color:var(--teal);letter-spacing:1.2px}
+  .prompt-title{font-size:14px;font-weight:700;margin-bottom:8px;color:var(--ink)}
+  .prompt-text{background:var(--sand);border-radius:8px;padding:12px 14px;font-size:12px;line-height:1.75;color:var(--ink2);margin-bottom:12px;white-space:pre-wrap}
+  .prompt-text .ph{color:var(--coral);font-weight:700}
+  .prompt-actions{display:flex;gap:6px;flex-wrap:wrap}
+  .prompt-copy{background:#fff;border:1px solid var(--teal);color:var(--teal);border-radius:8px;padding:7px 14px;font-size:12px;font-weight:600;cursor:pointer;transition:all .15s;font-family:'Noto Sans KR',sans-serif}
+  .prompt-copy:hover{background:var(--teal);color:#fff}
+
+  .mid-cta{background:linear-gradient(135deg,#FEF8DC 0%,#FEE500 100%);border-radius:18px;padding:32px 24px;text-align:center;margin:48px 0;border:1px solid rgba(254,229,0,.6);position:relative;overflow:hidden}
+  .mid-cta::before{content:'💬';position:absolute;font-size:120px;opacity:.06;right:-10px;top:-20px;transform:rotate(-15deg)}
+  .mid-cta-inner{position:relative;z-index:1}
+  .mid-cta h3{font-family:'Noto Serif KR',serif;font-size:20px;font-weight:700;color:#2B1A00;margin-bottom:8px}
+  .mid-cta p{font-size:13px;color:#5C3A00;margin-bottom:20px;line-height:1.7}
+  .kakao-big-btn{display:inline-flex;align-items:center;gap:8px;background:var(--gold-deep);color:var(--gold);border-radius:12px;padding:14px 30px;font-size:14px;font-weight:700;text-decoration:none;transition:transform .15s,box-shadow .15s}
+  .kakao-big-btn:hover{transform:translateY(-2px);box-shadow:0 10px 28px rgba(0,0,0,.25)}
+
+  .social-row{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-top:16px}
+  .social-chip{display:inline-flex;align-items:center;gap:6px;background:var(--paper);border:1px solid var(--line);border-radius:100px;padding:8px 16px;font-size:12px;font-weight:600;color:var(--ink2);text-decoration:none;transition:all .15s}
+  .social-chip:hover{border-color:var(--teal);color:var(--teal);transform:translateY(-1px)}
+
+  .bottom-banner{background:linear-gradient(135deg,#0A7E6E,#0D5C50 60%,#083D35);border-radius:18px;padding:36px 26px;text-align:center;margin:48px 0 0;color:#fff;position:relative;overflow:hidden}
+  .bottom-banner::before{content:'';position:absolute;inset:0;background:radial-gradient(circle at 80% 20%,rgba(125,235,176,.15),transparent 50%);pointer-events:none}
+  .bottom-banner-inner{position:relative;z-index:1}
+  .bottom-eyebrow{font-size:11px;letter-spacing:1.5px;color:#7DEBB0;font-weight:700;text-transform:uppercase;margin-bottom:12px}
+  .bottom-banner h3{font-family:'Noto Serif KR',serif;font-size:22px;color:#fff;margin-bottom:10px;letter-spacing:-.3px}
+  .bottom-banner p{font-size:13px;color:rgba(255,255,255,.75);margin-bottom:24px;line-height:1.7}
+
+  footer{background:var(--ink);color:rgba(255,255,255,.7);padding:40px 20px 32px;text-align:center;margin-top:56px}
+  .footer-logo{font-family:'Noto Serif KR',serif;font-size:18px;font-weight:700;color:#fff;margin-bottom:8px}
+  .footer-logo em{color:#7DEBB0;font-style:normal}
+  footer p{font-size:12px;line-height:1.7;margin-bottom:22px}
+  .footer-kakao{display:inline-flex;align-items:center;gap:6px;background:var(--gold);color:var(--gold-deep);border-radius:10px;padding:10px 22px;font-size:13px;font-weight:700;text-decoration:none;margin-bottom:22px;transition:transform .15s}
+  .footer-kakao:hover{transform:translateY(-2px)}
+  .footer-links{display:flex;justify-content:center;gap:18px;flex-wrap:wrap;margin-bottom:24px}
+  .footer-links a{color:rgba(255,255,255,.55);font-size:12px;text-decoration:none;transition:color .15s}
+  .footer-links a:hover{color:#7DEBB0}
+  .copy{font-size:11px;color:rgba(255,255,255,.3)}
+
+  .divider{height:1px;background:linear-gradient(90deg,transparent,var(--line),transparent);margin:40px 0}
+
+  @media(max-width:480px){
+    .hero{padding:42px 16px 46px}
+    .hero h1{font-size:24px}
+    .hero-stats{gap:24px}
+    .section h2{font-size:20px}
+    .card{padding:20px}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-inner">
+    <div class="hero-badge">🧳 관광 취업 AI 문서 킷 · Free Resource</div>
+    <div class="hero-avatar">👨‍💼</div>
+    <h1>관광 취업, AI로<br><em>문서부터 다르게</em> 만드세요</h1>
+    <p class="sub">이력서 · 자기소개서 · 포트폴리오 · 퍼스널 브랜딩<br>관광 분야 취업 준비생을 위한 실전 AI 프롬프트 도구</p>
+    <div class="hero-stats">
+      <div class="hero-stat"><strong>14년</strong><span>HRD 경력</span></div>
+      <div class="hero-stat"><strong>100+</strong><span>기업교육 기획</span></div>
+      <div class="hero-stat"><strong>3권</strong><span>전자책 출판</span></div>
+      <div class="hero-stat"><strong>1만+</strong><span>교육 대상</span></div>
+    </div>
+    <div class="hero-btns">
+      <a href="https://pf.kakao.com/_xaGhbX" target="_blank" rel="noopener" class="btn-kakao">💬 카카오 채널로 질문하기</a>
+      <a href="https://bookcreation-profile.vercel.app/#contact" target="_blank" rel="noopener" class="btn-outline">강사 소개 페이지 →</a>
+    </div>
+  </div>
+</section>
+
+<nav class="tools-nav">
+  <a href="#tool1">① 직무경험 변환</a>
+  <a href="#tool2">② 퍼스널브랜딩</a>
+  <a href="#tool3">③ 포트폴리오</a>
+  <a href="#bonus">④ 프롬프트 킷</a>
+</nav>
+
+<div class="container">
+
+  <section class="section" id="tool1">
+    <div class="sec-label">TOOL 01</div>
+    <h2>직무 경험 → <em>이력서·자소서·포트폴리오</em></h2>
+    <p class="desc">관광 분야에서 쌓은 경험을 입력하면, 내 상황에 맞춘 <strong>완성형 프롬프트</strong>가 자동으로 만들어집니다. 복사해서 <strong>Claude(claude.ai)</strong>에 붙여넣기만 하세요.</p>
+    <div class="tool-chips"><span class="chip chip-claude">Claude</span></div>
+
+    <div class="notice">
+      <strong>💡 작성 팁:</strong> 경험에는 <strong>숫자(기간·인원·매출·건수)</strong>를 꼭 포함하세요. AI 결과 품질이 3배 이상 좋아집니다.
+    </div>
+
+    <div class="card">
+      <div class="field-row">
+        <div class="field">
+          <label>지원 직무<span class="req">*</span></label>
+          <input type="text" id="t1-job" placeholder="예: 호텔 프런트 직원">
+        </div>
+        <div class="field">
+          <label>지원 기업/기관 (선택)</label>
+          <input type="text" id="t1-company" placeholder="예: 신라호텔">
+        </div>
+      </div>
+      <div class="field">
+        <label>보유 직무 경험<span class="req">*</span> <span style="color:var(--ink3);font-weight:400">(구체적 업무·기간·성과)</span></label>
+        <textarea id="t1-exp" placeholder="예시:&#10;- 부산 ○○호텔 인턴 6개월&#10;- 외국인 체크인·아웃 하루 50건+ 처리&#10;- 영어/중국어 응대 가능, 불만 고객 응대 3건 해결&#10;- 객실 업그레이드 제안 일평균 5건, VIP 응대 경험"></textarea>
+      </div>
+      <div class="field">
+        <label>강조하고 싶은 강점 (선택)</label>
+        <input type="text" id="t1-strength" placeholder="예: 다국어 응대, 위기 대처, 고객 만족도 향상">
+      </div>
+
+      <div class="tab-bar">
+        <button class="tab-btn active" onclick="setT1Tab(this,'resume')">📄 이력서 문구</button>
+        <button class="tab-btn" onclick="setT1Tab(this,'coverletter')">📝 자기소개서</button>
+        <button class="tab-btn" onclick="setT1Tab(this,'portfolio')">🗂 포트폴리오</button>
+      </div>
+      <input type="hidden" id="t1-mode" value="resume">
+      <button class="run-btn" onclick="genT1()">✨ 맞춤 프롬프트 생성하기</button>
+
+      <div class="output-box" id="t1-out">
+        <div class="output-label">생성된 프롬프트 — Claude에 붙여넣기</div>
+        <div class="output-actions">
+          <button class="copy-btn" onclick="copyOut('t1-result','t1-out')">복사</button>
+          <a href="https://claude.ai" target="_blank" rel="noopener" class="claude-btn">Claude 열기 ↗</a>
+        </div>
+        <div class="output-content" id="t1-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="tool2">
+    <div class="sec-label">TOOL 02</div>
+    <h2>퍼스널 브랜딩 <em>한 줄 소개</em> 생성기</h2>
+    <p class="desc">강점 키워드를 선택하고 경험을 입력하면, <strong>인스타 · 링크드인 · 카카오 프로필</strong>용 한 줄 소개 작성 프롬프트가 자동 생성됩니다.</p>
+    <div class="tool-chips"><span class="chip chip-claude">Claude</span></div>
+
+    <div class="card">
+      <div class="field">
+        <label>나의 강점 키워드 <span style="color:var(--ink3);font-weight:400">(여러 개 선택 가능)</span></label>
+        <div class="keyword-chips" id="kchips">
+          <span class="kchip" onclick="toggleChip(this)">다국어 소통</span>
+          <span class="kchip" onclick="toggleChip(this)">고객 응대</span>
+          <span class="kchip" onclick="toggleChip(this)">문제 해결</span>
+          <span class="kchip" onclick="toggleChip(this)">일정·예약 관리</span>
+          <span class="kchip" onclick="toggleChip(this)">관광 통역</span>
+          <span class="kchip" onclick="toggleChip(this)">여행 설계</span>
+          <span class="kchip" onclick="toggleChip(this)">호텔 운영</span>
+          <span class="kchip" onclick="toggleChip(this)">데이터 분석</span>
+          <span class="kchip" onclick="toggleChip(this)">SNS 마케팅</span>
+          <span class="kchip" onclick="toggleChip(this)">콘텐츠 기획</span>
+          <span class="kchip" onclick="toggleChip(this)">협업 리더십</span>
+          <span class="kchip" onclick="toggleChip(this)">세일즈</span>
+          <span class="kchip" onclick="toggleChip(this)">이벤트 기획</span>
+          <span class="kchip" onclick="toggleChip(this)">위기 대응</span>
+        </div>
+      </div>
+      <div class="field">
+        <label>대표 경험 1-2가지<span class="req">*</span></label>
+        <textarea id="t2-exp" style="min-height:80px" placeholder="예: 동남아 패키지 투어 가이드 2년 / 인바운드 외국인 1,000명 응대"></textarea>
+      </div>
+      <div class="field">
+        <label>지향하는 커리어 방향<span class="req">*</span></label>
+        <input type="text" id="t2-goal" placeholder="예: 항공사 서비스 전문가 / 관광 마케터 / 호텔 매니저">
+      </div>
+      <button class="run-btn" onclick="genT2()">✨ 한 줄 소개 프롬프트 만들기</button>
+
+      <div class="output-box" id="t2-out">
+        <div class="output-label">생성된 프롬프트 — Claude에 붙여넣기</div>
+        <div class="output-actions">
+          <button class="copy-btn" onclick="copyOut('t2-result','t2-out')">복사</button>
+          <a href="https://claude.ai" target="_blank" rel="noopener" class="claude-btn">Claude 열기 ↗</a>
+        </div>
+        <div class="output-content" id="t2-result"></div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <div class="mid-cta">
+    <div class="mid-cta-inner">
+      <h3>💬 강의 후 추가 질문 있으신가요?</h3>
+      <p>이력서 첨삭 · AI 도구 활용 · 취업 전략<br>카카오 채널에서 요셉쌤에게 바로 물어보세요</p>
+      <a href="https://pf.kakao.com/_xaGhbX" target="_blank" rel="noopener" class="kakao-big-btn">
+        💬 요셉쌤 AI문서연구소 채널 입장
+      </a>
+      <div class="social-row">
+        <a href="https://bookcreation-profile.vercel.app/#contact" target="_blank" rel="noopener" class="social-chip">🔗 강사 소개</a>
+        <a href="https://www.instagram.com/bookcreation_" target="_blank" rel="noopener" class="social-chip">📸 인스타</a>
+        <a href="https://www.threads.com/@bookcreation_" target="_blank" rel="noopener" class="social-chip">🧵 스레드</a>
+        <a href="https://blog.naver.com/bookcreation" target="_blank" rel="noopener" class="social-chip">📖 블로그</a>
+      </div>
+    </div>
+  </div>
+
+  <section class="section" id="tool3">
+    <div class="sec-label">TOOL 03</div>
+    <h2>포트폴리오 1페이지 <em>구성 워크플로우</em></h2>
+    <p class="desc">관광 취업용 포트폴리오 1페이지를 만드는 <strong>6단계 AI 활용 순서</strong>입니다. 각 단계의 프롬프트를 그대로 복사해 사용하세요.</p>
+    <div class="tool-chips">
+      <span class="chip chip-claude">Claude</span>
+      <span class="chip chip-gamma">감마앱</span>
+      <span class="chip chip-napkin">넵킨 AI</span>
+      <span class="chip chip-nlm">NotebookLM</span>
+    </div>
+
+    <div class="steps">
+      <div class="step-item">
+        <div class="step-num">1</div>
+        <div class="step-content">
+          <h4>내 경험 원석 채굴 (Claude)</h4>
+          <p>모호한 경험을 포트폴리오용 핵심 키워드로 정제합니다.</p>
+          <div class="step-prompt">나는 [직무]에서 [기간] 동안 [주요 업무]를 했습니다. 이 경험에서 관광 채용 담당자가 주목할 만한 핵심 성과·역량 키워드 10개와 정량적 성과 3가지를 뽑아주세요.</div>
+          <span class="step-tool">Claude</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">2</div>
+        <div class="step-content">
+          <h4>1페이지 구성안 작성 (Claude)</h4>
+          <p>핵심 5섹션(자기소개 / 핵심 역량 / 주요 경험 / 실적 / 목표) 텍스트를 정리합니다.</p>
+          <div class="step-prompt">위 키워드로 관광 취업 포트폴리오 1페이지 구성안을 만들어주세요. 섹션: ① 자기소개 한 줄 ② 핵심 역량 3가지 ③ 대표 경험 2건(상황-역할-결과) ④ 정량 실적 ⑤ 커리어 목표. 각 섹션 50자 내외.</div>
+          <span class="step-tool">Claude</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">3</div>
+        <div class="step-content">
+          <h4>감마앱으로 슬라이드 변환 (gamma.app)</h4>
+          <p>Claude 결과를 그대로 감마앱에 붙여넣고 자동 슬라이드 생성. "전문적이고 깔끔한 톤" 선택.</p>
+          <div class="step-prompt">아래 내용으로 관광 취업 포트폴리오 1페이지를 만들어줘. 디자인은 모던 미니멀, 색감은 차분한 톤. [Claude에서 받은 내용 붙여넣기]</div>
+          <span class="step-tool">감마앱</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">4</div>
+        <div class="step-content">
+          <h4>넵킨 AI로 시각화 강화 (napkin.ai)</h4>
+          <p>역량 흐름이나 경력 타임라인을 인포그래픽으로 변환 → 감마앱 슬라이드에 삽입.</p>
+          <div class="step-prompt">[경력 또는 역량 텍스트]를 넵킨에 붙여넣고 → 다이어그램 자동 생성 → 마음에 드는 형태 선택 → 이미지 저장</div>
+          <span class="step-tool">넵킨 AI</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">5</div>
+        <div class="step-content">
+          <h4>NotebookLM으로 근거 자료 보강</h4>
+          <p>자격증·증명서·프로젝트 결과 PDF를 업로드 → 핵심 문구 추출 → 포트폴리오 설명에 인용.</p>
+          <div class="step-prompt">업로드한 자료에서 채용에 어필할 만한 핵심 성과·수치·인용구를 5가지 뽑아주세요.</div>
+          <span class="step-tool">NotebookLM</span>
+        </div>
+      </div>
+      <div class="step-item">
+        <div class="step-num">6</div>
+        <div class="step-content">
+          <h4>최종 PDF 저장 & 제출</h4>
+          <p>감마앱에서 PDF 내보내기. 채용 담당자에게는 PDF, SNS 포트폴리오는 공유 링크로 전달.</p>
+          <span class="step-tool">감마앱 → PDF</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="divider"></div>
+
+  <section class="section" id="bonus">
+    <div class="sec-label">BONUS</div>
+    <h2>관광 취업 <em>실전 프롬프트 킷</em> 6선</h2>
+    <p class="desc">호텔 · 여행사 · 항공사 · 면세점 · 관광청 등 직무별로 바로 활용 가능한 Claude 프롬프트입니다.</p>
+    <div class="prompt-grid" id="prompt-grid"></div>
+  </section>
+
+  <div class="bottom-banner">
+    <div class="bottom-banner-inner">
+      <div class="bottom-eyebrow">요셉쌤 AI문서연구소</div>
+      <h3>더 많은 AI 문서 자료가 필요하신가요?</h3>
+      <p>이력서 첨삭 · AI 툴 활용 · 비즈니스 문서 작성<br>모든 질문에 요셉쌤이 직접 답변합니다.</p>
+      <div class="hero-btns">
+        <a href="https://pf.kakao.com/_xaGhbX" target="_blank" rel="noopener" class="btn-kakao">💬 카카오 채널 입장</a>
+        <a href="https://bookcreation-profile.vercel.app/#contact" target="_blank" rel="noopener" class="btn-outline">강사 공식 페이지 →</a>
+      </div>
+      <div class="social-row" style="margin-top:20px">
+        <a href="https://www.instagram.com/bookcreation_" target="_blank" rel="noopener" class="social-chip">📸 인스타그램</a>
+        <a href="https://www.threads.com/@bookcreation_" target="_blank" rel="noopener" class="social-chip">🧵 스레드</a>
+        <a href="https://blog.naver.com/bookcreation" target="_blank" rel="noopener" class="social-chip">📖 네이버 블로그</a>
+        <a href="https://brunch.co.kr/@bookcreation" target="_blank" rel="noopener" class="social-chip">✍️ 브런치</a>
+        <a href="https://soffmadldi1-dev.github.io/AI-report-prompt-kit-20/" target="_blank" rel="noopener" class="social-chip">🎁 AI 프롬프트 킷 20선</a>
+      </div>
+    </div>
+  </div>
+
+</div>
+
+<footer>
+  <div class="footer-logo">요셉쌤 <em>AI문서연구소</em></div>
+  <p>홍요셉 | HRD 교육기획자 · AI 활용 문서작성 강사<br>관광 취업 AI 문서 킷 · 완전 무료 제공</p>
+  <a href="https://pf.kakao.com/_xaGhbX" target="_blank" rel="noopener" class="footer-kakao">💬 카카오 채널로 질문하기</a>
+  <div class="footer-links">
+    <a href="https://bookcreation-profile.vercel.app/#contact" target="_blank" rel="noopener">강사 소개</a>
+    <a href="https://www.instagram.com/bookcreation_" target="_blank" rel="noopener">인스타그램</a>
+    <a href="https://www.threads.com/@bookcreation_" target="_blank" rel="noopener">스레드</a>
+    <a href="https://blog.naver.com/bookcreation" target="_blank" rel="noopener">블로그</a>
+    <a href="https://brunch.co.kr/@bookcreation" target="_blank" rel="noopener">브런치</a>
+    <a href="https://soffmadldi1-dev.github.io/AI-report-prompt-kit-20/" target="_blank" rel="noopener">프롬프트 킷 20선</a>
+  </div>
+  <p class="copy">© 요셉쌤 AI문서연구소 · 무단 전재 및 재배포 금지</p>
+</footer>
+
+<script>
+function setT1Tab(btn, mode){
+  document.querySelectorAll('#tool1 .tab-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  document.getElementById('t1-mode').value = mode;
+}
+
+function genT1(){
+  const job = document.getElementById('t1-job').value.trim();
+  const company = document.getElementById('t1-company').value.trim();
+  const exp = document.getElementById('t1-exp').value.trim();
+  const strength = document.getElementById('t1-strength').value.trim();
+  const mode = document.getElementById('t1-mode').value;
+
+  if(!job){ alert('지원 직무를 입력해주세요!'); document.getElementById('t1-job').focus(); return; }
+  if(!exp){ alert('보유 직무 경험을 입력해주세요!'); document.getElementById('t1-exp').focus(); return; }
+
+  const companyLine = company ? `지원 기업/기관: ${company}\n` : '';
+  const strengthLine = strength ? `강조하고 싶은 강점: ${strength}\n` : '';
+
+  let prompt = '';
+
+  if(mode === 'resume'){
+    prompt = `당신은 관광 산업 채용 전문가입니다. 다음 정보로 이력서에 넣을 강력한 성과 중심 문구를 작성해주세요.
+
+【지원 직무】 ${job}
+${companyLine}【보유 경험】
+${exp}
+${strengthLine}
+【요청】
+1) 이력서 "경력/활동" 항목에 들어갈 성과 중심 문구 5개를 작성해주세요.
+2) 각 문구는 다음 규칙을 따릅니다:
+   - 동사로 시작 (담당, 개선, 처리, 응대, 달성, 운영 등)
+   - 구체적 수치 포함 (건수, %, 인원, 매출, 기간)
+   - 50자 이내, 한 줄로
+   - 채용 담당자가 한눈에 임팩트를 느낄 수 있도록
+3) 각 문구 아래에 어떤 역량을 보여주는지 1줄 코멘트
+4) 마지막에 "이력서 헤더용 한 줄 자기소개" 2개 버전(보수적 / 임팩트 버전) 추가
+
+한국어로 작성, 관광 분야 전문 용어 활용.`;
+  }
+  else if(mode === 'coverletter'){
+    prompt = `당신은 관광 산업 자기소개서 첨삭 전문가입니다.
+
+【지원 직무】 ${job}
+${companyLine}【보유 경험】
+${exp}
+${strengthLine}
+【요청】
+다음 4개 자기소개서 항목을 각각 200-300자로 작성해주세요. STAR 기법(Situation-Task-Action-Result)을 적용하되 자연스럽게 풀어쓰세요.
+
+1) 지원 동기 — 관광 산업과 해당 직무에 끌린 진정성 있는 이유
+2) 직무 역량 — 위 경험을 직무에 필요한 역량과 연결해 어필
+3) 성장 과정 / 핵심 가치관 — 관광인으로서의 마인드셋이 드러나도록
+4) 입사 후 포부 — 1년 / 3년 / 5년 단계별 구체적 계획
+
+각 항목에 추천 소제목도 함께 제안해주세요.
+한국어, 자연스러운 문어체, 과장 없이 진정성 있게.`;
+  }
+  else if(mode === 'portfolio'){
+    prompt = `당신은 관광 취업 포트폴리오 디자인 컨설턴트입니다.
+
+【지원 직무】 ${job}
+${companyLine}【보유 경험】
+${exp}
+${strengthLine}
+【요청】
+1페이지 관광 취업 포트폴리오에 들어갈 콘텐츠를 다음 구조로 추출해주세요:
+
+① 포트폴리오 메인 타이틀 후보 3개 (직무 정체성 + 강점)
+② 핵심 역량 키워드 8개 (관광 채용 담당자가 ATS·이력서 검색에서 찾을 만한 단어)
+③ 대표 프로젝트/경험 3건의 1줄 요약 (상황 → 역할 → 결과 구조)
+④ 정량 성과 BEST 5 (숫자 강조)
+⑤ 한 줄 자기 PR 문구 2개 (감성형 / 임팩트형)
+⑥ 감마앱(gamma.app)에 그대로 붙여넣을 수 있는 슬라이드 생성용 프롬프트
+
+마지막 ⑥번은 감마앱이 바로 디자인을 만들 수 있게 구조화해주세요.
+한국어, 관광 업계 트렌드 반영.`;
+  }
+
+  document.getElementById('t1-result').textContent = prompt;
+  document.getElementById('t1-out').classList.add('show');
+  setTimeout(()=>document.getElementById('t1-out').scrollIntoView({behavior:'smooth',block:'center'}),100);
+}
+
+function toggleChip(el){ el.classList.toggle('selected'); }
+function getSelectedChips(){
+  return [...document.querySelectorAll('#kchips .kchip.selected')].map(c=>c.textContent.trim());
+}
+
+function genT2(){
+  const chips = getSelectedChips();
+  const exp = document.getElementById('t2-exp').value.trim();
+  const goal = document.getElementById('t2-goal').value.trim();
+
+  if(!exp){ alert('대표 경험을 입력해주세요!'); document.getElementById('t2-exp').focus(); return; }
+  if(!goal){ alert('커리어 방향을 입력해주세요!'); document.getElementById('t2-goal').focus(); return; }
+
+  const chipLine = chips.length ? chips.join(', ') : '(미선택)';
+
+  const prompt = `당신은 관광 업계 퍼스널 브랜딩 컨설턴트입니다.
+
+【강점 키워드】 ${chipLine}
+【대표 경험】 ${exp}
+【지향 커리어】 ${goal}
+
+다음 3가지 플랫폼별 "한 줄 자기소개" 문구를 각각 2가지 버전(A: 감성형 / B: 임팩트형)으로 만들어주세요. 각 버전 아래에 "이 문구가 효과적인 이유"를 1줄 코멘트로 추가.
+
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+1) 📸 인스타그램 (40-60자, 해시태그 2-3개 포함, 감성 + 위트)
+2) 💼 링크드인 (50-80자, 전문성 + 영문 직무 키워드 1-2개 포함)
+3) 💬 카카오톡 프로필 (30-45자, 친근하고 기억에 남는 톤)
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+
+추가 요청:
+- 각 플랫폼 톤에 맞게 어휘와 길이 차별화
+- 관광 산업 정체성이 한 단어로라도 드러나게
+- 진부한 표현(열정, 도전, 책임감 같은 단어) 지양
+- 마지막에 "함께 쓰면 좋을 카카오톡 상태메시지 3개"도 추천
+
+한국어 기본, 링크드인은 영문 직무명 혼용 가능.`;
+
+  document.getElementById('t2-result').textContent = prompt;
+  document.getElementById('t2-out').classList.add('show');
+  setTimeout(()=>document.getElementById('t2-out').scrollIntoView({behavior:'smooth',block:'center'}),100);
+}
+
+function copyOut(resultId, boxId){
+  const text = document.getElementById(resultId).textContent;
+  navigator.clipboard.writeText(text).then(()=>{
+    const btn = document.querySelector('#' + boxId + ' .copy-btn');
+    const orig = btn.textContent;
+    btn.textContent = '✅ 복사완료';
+    btn.style.background = '#0A7E6E';
+    btn.style.color = '#fff';
+    setTimeout(()=>{ btn.textContent = orig; btn.style.background=''; btn.style.color=''; }, 1800);
+  }).catch(()=>alert('복사 실패. 직접 선택해서 복사해주세요.'));
+}
+
+function copyPromptText(btn, text){
+  navigator.clipboard.writeText(text).then(()=>{
+    const orig = btn.textContent;
+    btn.textContent = '✅ 복사완료';
+    btn.style.background = '#0A7E6E';
+    btn.style.color = '#fff';
+    btn.style.borderColor = '#0A7E6E';
+    setTimeout(()=>{ btn.textContent = orig; btn.style.background=''; btn.style.color=''; btn.style.borderColor=''; }, 1800);
+  }).catch(()=>alert('복사 실패.'));
+}
+
+const prompts = [
+  {
+    num:"01", tool:"호텔",
+    title:"호텔 직무 — 객실/프런트 자소서",
+    text:`나는 [호텔명/인턴 경험]에서 [기간] 동안 [구체 업무]를 했습니다.
+하루 평균 [숫자]건의 외국인 응대와 [성과]를 만들었습니다.
+
+이 경험으로 [호텔명] [지원 직무]에 지원하는 자기소개서 "직무 역량" 항목을 300자로 작성해주세요. STAR 기법 적용, 호스피탈리티 마인드가 드러나게.`
+  },
+  {
+    num:"02", tool:"여행사",
+    title:"여행사 OP/MD — 이력서 성과 문구",
+    text:`나는 여행사에서 [업무 영역]을 [기간] 담당했습니다.
+주요 성과: [수치 1], [수치 2], [수치 3]
+
+위 경험으로 여행사 OP 또는 상품기획(MD) 직무 이력서에 들어갈 성과 중심 한 줄 문구 5개를 작성해주세요. 동사 시작, 50자 이내, 정량 수치 포함.`
+  },
+  {
+    num:"03", tool:"항공사",
+    title:"항공사 객실승무원 — 자기소개서 4문항",
+    text:`【지원 항공사】 [항공사명]
+【보유 경험】 [경험 요약 — 서비스/외국어/체력 활동]
+【강점】 [강점 3가지]
+
+위 정보로 객실승무원 자소서 4항목을 각 250자로 작성해주세요:
+1) 지원 동기
+2) 서비스 마인드를 보여준 경험
+3) 팀워크/위기 대처 경험
+4) 입사 후 포부
+
+진부한 표현(꿈, 열정 단독 사용) 지양, 구체적 일화 중심.`
+  },
+  {
+    num:"04", tool:"면세점",
+    title:"면세점 판매·MD — 포트폴리오 키워드 추출",
+    text:`나는 [면세점/판매 환경]에서 [기간] [업무]를 했습니다.
+응대 고객층: [국적/연령] / 주력 카테고리: [상품군]
+대표 성과: [매출/객단가/재방문율 등]
+
+위 정보로 면세점 포트폴리오용 핵심 키워드 10개와, 감마앱에 붙여넣을 슬라이드 1페이지 구성 프롬프트를 만들어주세요.`
+  },
+  {
+    num:"05", tool:"관광청·공공",
+    title:"관광청/공기관 — 자기소개서 공공성 어필",
+    text:`【지원 기관】 [기관명, 예: 한국관광공사]
+【지원 직무】 [관광 마케팅 / 정책기획 / MICE]
+【경험】 [구체 경험]
+
+위 기관의 미션·비전과 내 경험을 연결한 자소서 "조직 적합성" 문항(400자)을 작성해주세요. 공공성·지역상생·관광 트렌드 키워드 자연스럽게 포함.`
+  },
+  {
+    num:"06", tool:"감마앱",
+    title:"감마앱 1페이지 포트폴리오 즉시 생성",
+    text:`(이 프롬프트를 gamma.app 새 생성창에 그대로 붙여넣기)
+
+관광 취업 포트폴리오 1페이지를 만들어줘.
+- 이름: [이름]
+- 지원 직무: [직무]
+- 핵심 역량 3가지: [역량 1], [역량 2], [역량 3]
+- 대표 경험 2건: [경험 1 / 결과], [경험 2 / 결과]
+- 정량 성과: [수치 3가지]
+- 커리어 목표: [목표 한 줄]
+
+디자인: 모던 미니멀, 차분한 톤, 사진 1장 배치, 한 페이지에 모두 포함.`
+  }
+];
+
+const grid = document.getElementById('prompt-grid');
+prompts.forEach(p => {
+  const escaped = p.text.replace(/\\/g,'\\\\').replace(/`/g,'\\`').replace(/\$/g,'\\$');
+  const display = p.text.replace(/\[([^\]]+)\]/g,'<span class="ph">[$1]</span>').replace(/\n/g,'<br>');
+  grid.innerHTML += `
+    <div class="prompt-item">
+      <div class="prompt-head">
+        <div class="prompt-num">PROMPT ${p.num}</div>
+        <span class="chip chip-claude">${p.tool}</span>
+      </div>
+      <div class="prompt-title">${p.title}</div>
+      <div class="prompt-text">${display}</div>
+      <div class="prompt-actions">
+        <button class="prompt-copy" onclick="copyPromptText(this, \`${escaped}\`)">📋 복사하기</button>
+        <a href="https://claude.ai" target="_blank" rel="noopener" class="prompt-copy" style="text-decoration:none;display:inline-flex;align-items:center;gap:4px">Claude 열기 ↗</a>
+      </div>
+    </div>`;
+});
+</script>
+</body>
+</html>
